@@ -5,7 +5,7 @@ function computerPlay() {
     return choices[randomIndex];
 }
 
-console.log(computerPlay()); // Test the function by logging the computer's choice
+//console.log(computerPlay()); // Test the function by logging the computer's choice
 
 //Step 2: Function to get and clean the player's choice
 function playerPlay() {
@@ -26,7 +26,7 @@ function playerPlay() {
     }
 }
 
-console.log(playerPlay()); // Test the function by logging the player's choice
+//console.log(playerPlay()); // Test the function by logging the player's choice
 
 //Step 3: Function to play a single round
 function playRound(playerSelection, computerSelection) {
@@ -58,9 +58,13 @@ function game() {
     let playerScore = 0;
     let computerScore = 0;
 
-    console.log("Welcome to Rock, Paper, Scissors! First to 3 wins takes the match.");
+    //UX requirement: Explain the and game rules before starting
+    alert("ATTENTION PLAYER: This game uses your browser's Console to display scores and results!\n\nPlease open your Developer Tools Console (F12 or Right Click -> Inspect -> Console) to follow the gamebefore clicking OK.");
+    console.log("Welcome to Rock, Paper, Scissors vs. the Evil AI! First to 3 wins takes the match.");
     while (playerScore < 3 && computerScore <3) {
         
+        let playerChoice = playerPlay
+
         //Handle user clicking Cancel on prompt
         if (playerChoice === null) {
             console.log("Game cancelled by player");
