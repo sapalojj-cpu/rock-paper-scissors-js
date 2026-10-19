@@ -27,3 +27,28 @@ function playerPlay() {
 }
 
 console.log(playerPlay()); // Test the function by logging the player's choice
+
+//Step 3: Function to play a single round
+function playRound(playerSelection, computerSelection) {
+    if (playerSelection === null) {
+        return "Cancelled"; // Handle case where player cancels the prompt
+    }
+
+    if (playerSelection ==="Invalid") {
+        return "Invalid"; // Handle case where player input is gibberish
+    }
+    
+    if (playerSelection === computerSelection) {
+        return `It's a tie! Both chose ${playerSelection}`;
+    }
+    else if (
+        (playerSelection === "Rock" && computerSelection === "Scissors") ||
+        (playerSelection === "Paper" && computerSelection === "Rock") ||
+        (playerSelection === "Scissors" && computerSelection === "Paper")
+    ) {
+        return `You Win! ${playerSelection} beats ${computerSelection}`;
+    }
+    else {
+        return`You Lose! ${computerSelection} beats ${playerSelection}`;
+    }
+}
