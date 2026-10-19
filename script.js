@@ -90,4 +90,20 @@ function game() {
         console.log(`Score -> You: ${playerScore} | Computer: ${computerScore}`);
         console.log("-----------------------------------------");
     }
+
+    //Announce final winner once someone hits 3 wins
+    if (playerScore === 3) {
+        console.log("Congratulations! You won the entire match!");
+        alert("Congratulations! You won the entire match!");
+    } else if (computerScore === 3) {
+        console.log("Game Over! The computer won the match.");
+    }
+
+    //Ask the user if they want to play again using confirm()
+    let playAgain = confirm("Would you like to play another game?");
+    if (playAgain) {
+        game(); //Restarts the game loop
+    } else {
+        console.log("Thanks for playing!");
+    }
 }
