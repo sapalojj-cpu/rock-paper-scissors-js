@@ -52,3 +52,42 @@ function playRound(playerSelection, computerSelection) {
         return`You Lose! ${computerSelection} beats ${playerSelection}`;
     }
 }
+
+//Step 4: Function to run the full game loop up to 3 wins
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    console.log("Welcome to Rock, Paper, Scissors! First to 3 wins takes the match.");
+    while (playerScore < 3 && computerScore <3) {
+        
+        //Handle user clicking Cancel on prompt
+        if (playerChoice === null) {
+            console.log("Game cancelled by player");
+            alert("Game cancelled.");
+            break; //To exit the loop safely   
+        }
+
+        //Handle invalid input (e.g. typing gibberish)
+        if (playerChoice === "Invalid") {
+            continue;// ask again without changing score
+        }
+
+        let computerChoice = computerPlay();
+        let roundResult = playRound(playerChoice, computerChoice);
+
+        console.log(`You chose: ${playerChoice}`);
+        console.log(`Computer chose: ${computerChoice}`);
+        console.log(roundResult);
+
+        //Update scores based on who won the round
+        if (roundResult.includes("You Win!")){
+            playerScore++;
+        } else if (roundResult.includes("You Lose!")) {
+            computerScore++;
+        }
+
+        console.log(`Score -> You: ${playerScore} | Computer: ${computerScore}`);
+        console.log("-----------------------------------------");
+    }
+}
