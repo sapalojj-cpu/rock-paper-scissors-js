@@ -63,7 +63,7 @@ function game() {
     console.log("Welcome to Rock, Paper, Scissors vs. the Evil AI! First to 3 wins takes the match.");
     while (playerScore < 3 && computerScore <3) {
         
-        let playerChoice = playerPlay
+        let playerChoice = playerPlay();
 
         //Handle user clicking Cancel on prompt
         if (playerChoice === null) {
@@ -111,3 +111,5 @@ function game() {
         console.log("Thanks for playing!");
     }
 }
+
+game()
