@@ -5,7 +5,7 @@ function computerPlay() {
     return choices[randomIndex];
 }
 
-//console.log(computerPlay()); // Test the function by logging the computer's choice
+// console.log(computerPlay()); // Test the function by logging the computer's choice
 
 //Step 2: Function to get and clean the player's choice
 function playerPlay() {
@@ -14,19 +14,20 @@ function playerPlay() {
         return null; // User canceled the prompt
     }
     let cleanedInput = userinput.trim().toLowerCase();
-    if (cleanedInput === "rock") {
-        return "Rock";
-    } else if (cleanedInput === "paper") {
-        return "Paper";
-    } else if (cleanedInput === "scissors") {
-        return "Scissors";
-    } else {
-        alert("Invalid choice! Please try typing Rock, Paper, or Scissors.");
-        return "Invalid"; // Return a specific value for invalid input
+    switch (cleanedInput) { // Use switch statement to handle different cases instead of thed efault if-else structure
+        case 'rock':
+            return 'Rock';
+        case 'paper':
+            return 'Paper';
+        case 'scissors':
+            return 'Scissors';
+        default:
+            alert("Invalid input. Please type Rock, Paper, or Scissors.");
+            return "Invalid"; // Return a special value to indicate invalid input
     }
 }
 
-//console.log(playerPlay()); // Test the function by logging the player's choice
+// console.log(playerPlay()); // Test the function by logging the player's choice
 
 //Step 3: Function to play a single round
 function playRound(playerSelection, computerSelection) {
@@ -59,7 +60,7 @@ function game() {
     let computerScore = 0;
 
     //UX requirement: Explain the and game rules before starting
-    alert("ATTENTION PLAYER: This game uses your browser's Console to display scores and results!\n\nPlease open your Developer Tools Console (F12 or Right Click -> Inspect -> Console) to follow the gamebefore clicking OK.");
+    // alert("ATTENTION PLAYER: This game uses your browser's Console to display scores and results!\n\nPlease open your Developer Tools Console (F12 or Right Click -> Inspect -> Console) to follow the gamebefore clicking OK.");
     console.log("Welcome to Rock, Paper, Scissors vs. the Evil AI! First to 3 wins takes the match.");
     while (playerScore < 3 && computerScore <3) {
         
@@ -93,6 +94,7 @@ function game() {
 
         console.log(`Score -> You: ${playerScore} | Computer: ${computerScore}`);
         console.log("-----------------------------------------");
+        alert(`${roundResult}\n\nCurrent Score -> You: ${playerScore} | Computer: ${computerScore}`);
     }
 
     //Announce final winner once someone hits 3 wins
@@ -112,4 +114,3 @@ function game() {
     }
 }
 
-game()
