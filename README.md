@@ -1,6 +1,7 @@
 # 🤖 Rock, Paper, Scissors vs. The Evil AI
 
 A JavaScript-only console-based Rock, Paper, Scissors game built as part of the Web Development assignment.
+**Live Demo:**[Check out the live site here!](https://sapalojj-cpu.github.io/rock-paper-scissors-js/)
 
 ---
 
