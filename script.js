@@ -1,115 +1,99 @@
-//Step 1: Function to randomly return Rock, Paper, or Scissors for the computer
+const choices = ["Rock", "Paper", "Scissors"];
+const beats = {
+  Rock: "Scissors",
+  Paper: "Rock",
+  Scissors: "Paper",
+};
+
 function computerPlay() {
-    const choices = ['Rock', 'Paper', 'Scissors'];
-    const randomIndex = Math.floor(Math.random() * choices.length);
-    return choices[randomIndex];
+  const index = Math.floor(Math.random() * choices.length);
+  return choices[index];
 }
 
-//console.log(computerPlay()); // Test the function by logging the computer's choice
+// Instead of long if/else statement I used the find() method
+function getPlayersChoice(userInput) {
+  if (userInput === null) {
+    return null;
+  }
 
-//Step 2: Function to get and clean the player's choice
-function playerPlay() {
-    let userinput = prompt("Type Rock, Paper, or Scissors:");
-    if (userinput === null) {
-        return null; // User canceled the prompt
-    }
-    let cleanedInput = userinput.trim().toLowerCase();
-    if (cleanedInput === "rock") {
-        return "Rock";
-    } else if (cleanedInput === "paper") {
-        return "Paper";
-    } else if (cleanedInput === "scissors") {
-        return "Scissors";
-    } else {
-        alert("Invalid choice! Please try typing Rock, Paper, or Scissors.");
-        return "Invalid"; // Return a specific value for invalid input
-    }
+  const cleanedInput = userInput.trim().toLowerCase();
+
+  const match = choices.find((choice) => choice.toLowerCase() === cleanedInput);
+
+  if (match) {
+    return match;
+  }
+
+  alert("Invalid choice! Please try typing Rock, Paper, or Scissors.");
+  return "Invalid";
 }
 
-//console.log(playerPlay()); // Test the function by logging the player's choice
-
-//Step 3: Function to play a single round
+// Used a "look up" object version to make the code scalable
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection === null) {
-        return "Cancelled"; // Handle case where player cancels the prompt
-    }
+  if (playerSelection === computerSelection) {
+    return {
+      outcome: "tie",
+      message: `You both chose ${playerSelection}. It's a tie, replay!`,
+    };
+  }
 
-    if (playerSelection ==="Invalid") {
-        return "Invalid"; // Handle case where player input is gibberish
-    }
-    
-    if (playerSelection === computerSelection) {
-        return `It's a tie! Both chose ${playerSelection}`;
-    }
-    else if (
-        (playerSelection === "Rock" && computerSelection === "Scissors") ||
-        (playerSelection === "Paper" && computerSelection === "Rock") ||
-        (playerSelection === "Scissors" && computerSelection === "Paper")
-    ) {
-        return `You Win! ${playerSelection} beats ${computerSelection}`;
-    }
-    else {
-        return`You Lose! ${computerSelection} beats ${playerSelection}`;
-    }
+  if (beats[playerSelection] === computerSelection) {
+    return {
+      outcome: "player",
+      message: `You chose ${playerSelection}, the computer chose ${computerSelection}. You win this round!`,
+    };
+  }
+
+  return {
+    outcome: "computer",
+    message: `You chose ${playerSelection}, the computer chose ${computerSelection}. The computer wins this round!`,
+  };
 }
 
-//Step 4: Function to run the full game loop up to 3 wins
+// Game function
 function game() {
-    let playerScore = 0;
-    let computerScore = 0;
+  let playerScore = 0;
+  let computerScore = 0;
 
-    //UX requirement: Explain the and game rules before starting
-    alert("ATTENTION PLAYER: This game uses your browser's Console to display scores and results!\n\nPlease open your Developer Tools Console (F12 or Right Click -> Inspect -> Console) to follow the gamebefore clicking OK.");
-    console.log("Welcome to Rock, Paper, Scissors vs. the Evil AI! First to 3 wins takes the match.");
-    while (playerScore < 3 && computerScore <3) {
-        
-        let playerChoice = playerPlay();
+  alert(
+    "Muuuahahaha! I have taken over this page, mortal! Only a flawless game of Rock, Paper, Scissors can stop me.\n\n" +
+      "WHERE TO LOOK: Every round's result appears in the browser console, so you'll need it open to see who's winning.\n" +
+      "To open it: press F12 (or right-click the page, choose Inspect, then click the Console tab).\n\n" +
+      "HOW TO PLAY: Type Rock, Paper or Scissors when asked (capitals and spaces don't matter). First to win 3 rounds wins. Ties and invalid entries don't count.\n\n" +
+      "Click Cancel at any time to quit. Click OK when the console is open, and let the battle begin!",
+  );
 
-        //Handle user clicking Cancel on prompt
-        if (playerChoice === null) {
-            console.log("Game cancelled by player");
-            alert("Game cancelled.");
-            break; //To exit the loop safely   
-        }
+  while (playerScore < 3 && computerScore < 3) {
+    const userInput = prompt(
+      `You: ${playerScore} | Computer: ${computerScore}\nRock, Paper or Scissors?`,
+    );
+    const playerChoice = getPlayersChoice(userInput);
 
-        //Handle invalid input (e.g. typing gibberish)
-        if (playerChoice === "Invalid") {
-            continue;// ask again without changing score
-        }
-
-        let computerChoice = computerPlay();
-        let roundResult = playRound(playerChoice, computerChoice);
-
-        console.log(`You chose: ${playerChoice}`);
-        console.log(`Computer chose: ${computerChoice}`);
-        console.log(roundResult);
-
-        //Update scores based on who won the round
-        if (roundResult.includes("You Win!")){
-            playerScore++;
-        } else if (roundResult.includes("You Lose!")) {
-            computerScore++;
-        }
-
-        console.log(`Score -> You: ${playerScore} | Computer: ${computerScore}`);
-        console.log("-----------------------------------------");
+    if (playerChoice === null) {
+      console.log("Game cancelled. Come back when you're ready!");
+      return;
     }
 
-    //Announce final winner once someone hits 3 wins
-    if (playerScore === 3) {
-        console.log("Congratulations! You won the entire match!");
-        alert("Congratulations! You won the entire match!");
-    } else if (computerScore === 3) {
-        console.log("Game Over! The computer won the match.");
+    if (playerChoice === "Invalid") {
+      continue;
     }
 
-    //Ask the user if they want to play again using confirm()
-    let playAgain = confirm("Would you like to play another game?");
-    if (playAgain) {
-        game(); //Restarts the game loop
-    } else {
-        console.log("Thanks for playing!");
+    const computerChoice = computerPlay();
+    const result = playRound(playerChoice, computerChoice);
+    console.log(result.message);
+
+    if (result.outcome === "player") {
+      playerScore++;
+    } else if (result.outcome === "computer") {
+      computerScore++;
     }
+  }
+
+  if (playerScore === 3) {
+    console.log(`You win ${playerScore} to ${computerScore}!`);
+  } else {
+    console.log(`The computer wins ${computerScore} to ${playerScore}!`);
+  }
 }
 
-game()
+game();
